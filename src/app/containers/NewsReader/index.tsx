@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as style from './style.css';
+import { COUNTRIES } from 'app/constants/countries';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Select from 'app/components/Select';
 
 // import { inject, observer } from 'mobx-react';
 // import { RouteComponentProps } from 'react-router';
@@ -13,23 +15,18 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 4c7896ad75144f0d82e76f7f360011b5
  */
 
+const createListOfCountries = (ctrs: COUNTRIES) =>
+  Object.keys(ctrs).map((country: string) => <option>{country}</option>);
+
 export class NewsReader extends React.Component {
   render() {
     const { children } = this.props;
 
     return (
-      <div className={style.helloWorld}>
+      <div>
         <Form>
           <FormGroup>
-            <Label for="exampleSelect">Select</Label>
-            <Input type="select" name="select" id="exampleSelect">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Input>
-            <div className="alert alert-success">hello</div>
+            <Select />
           </FormGroup>
         </Form>
         {children}
