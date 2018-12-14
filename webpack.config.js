@@ -29,7 +29,7 @@ module.exports = {
     // (jsnext:main directs not usually distributable es6 format, but es6 sources)
     mainFields: ['module', 'browser', 'main'],
     alias: {
-      'app': path.resolve(__dirname, 'src/app/')
+      app: path.resolve(__dirname, 'src/app/')
     }
   },
   module: {
@@ -44,35 +44,36 @@ module.exports = {
       // css
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              query: {
-                modules: true,
-                sourceMap: !isProduction,
-                importLoaders: 1,
-                localIdentName: '[local]__[hash:base64:5]'
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: [
-                  require('postcss-import')({ addDependencyTo: webpack }),
-                  require('postcss-url')(),
-                  require('postcss-cssnext')(),
-                  require('postcss-reporter')(),
-                  require('postcss-browser-reporter')({
-                    disabled: isProduction
-                  })
-                ]
-              }
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: !isProduction,
+              camelCase: true,
+              importLoaders: 1,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
             }
-          ]
-        })
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('postcss-import')({ addDependencyTo: webpack }),
+                require('postcss-url')(),
+                require('postcss-cssnext')(),
+                require('postcss-reporter')(),
+                require('postcss-browser-reporter')({
+                  disabled: isProduction
+                })
+              ]
+            }
+          }
+        ]
       },
       // static assets
       { test: /\.html$/, use: 'html-loader' },
