@@ -65,6 +65,7 @@ module.exports = {
               plugins: [
                 require('postcss-import')({ addDependencyTo: webpack }),
                 require('postcss-url')(),
+                require('postcss-nested')(),
                 require('postcss-cssnext')(),
                 require('postcss-reporter')(),
                 require('postcss-browser-reporter')({

@@ -10,11 +10,10 @@ import { App } from 'app';
 useStrict(true);
 
 // default fixtures for TodoStore
-const defaultTodos = [];
 
 // prepare MobX stores
 const history = createBrowserHistory();
-const rootStore = createStores(history, defaultTodos);
+const rootStore = createStores(history);
 
 // render react DOM
 ReactDOM.render(
