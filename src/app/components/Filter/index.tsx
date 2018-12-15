@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as style from './style.css';
-import Select from 'app/components/Select';
+import Select, { ISelectOption } from 'app/components/Select';
 import { COUNTRIES, CATEGORIES, LANGUAGES } from 'app/constants/newsapi';
 import { Row, Col, Button } from 'reactstrap';
 

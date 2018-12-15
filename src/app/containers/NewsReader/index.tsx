@@ -3,10 +3,10 @@ import { Container, Row, Col } from 'reactstrap';
 import Filter from 'app/components/Filter';
 import NewsList from 'app/components/NewsList';
 
-// import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 // import { RouteComponentProps } from 'react-router';
 // import { RouterStore } from 'app/stores';
-// import { STORE_ROUTER } from 'app/constants';
+import { STORE_ROUTER, STORE_NEWS } from 'app/constants/stores';
 
 /**
  * #APIKEY
@@ -68,14 +68,20 @@ const data = [
   }
 ];
 
+@inject(STORE_ROUTER, STORE_NEWS)
 export class NewsReader extends React.Component {
   handleCat(value: String) {
     alert(value);
+  }
+  getget() {
+    const newsStore = this.props[STORE_NEWS];
+    newsStore.getNews('ru', 'business', 'ru');
   }
   render() {
     return (
       <Container>
         <Filter />
+        <button onClick={this.getget}>Click</button>
         <Row>
           <Col>
             <h1>Select Country, Category, Language</h1>
