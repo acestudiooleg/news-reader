@@ -1,4 +1,4 @@
-import { newsApiKey } from 'app/config';
+import { newsApiKey } from '../config';
 
 interface IQuery {
   category: string;
