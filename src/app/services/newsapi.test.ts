@@ -1,12 +1,10 @@
 import { NewsService } from './newsapi';
-import { omit } from 'lodash/fp';
 
 let api;
 const apiKey = 'hello';
 
 const defaultParams = {
   category: 'category',
-  language: 'language',
   country: 'country',
   from: '2018-10-19',
   sortBy: 'publishedAt',
@@ -49,14 +47,14 @@ test('createDate should build string date - YYYY-MM-DD not zero', () => {
 test('getEverything should build query and send http request', async () => {
   const httpGet = (url) => Promise.resolve(url);
   api.httpGet = httpGet;
-  const { category, country, language, sortBy, from } = defaultParams;
-  const req = api.getEverything(country, category, language, from);
+  const { category, country, sortBy, from } = defaultParams;
+  const req = api.getEverything(country, category, from);
   expect(req instanceof Promise).toBeTruthy();
   const url = await req;
   const params = {
     country,
     category,
-    language,
+    language: 'en',
     from,
     sortBy,
     apiKey

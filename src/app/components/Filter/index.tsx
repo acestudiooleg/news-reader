@@ -54,15 +54,6 @@ export default class Filter extends React.Component {
               options={categoriesList}
             />
           </div>
-          <div className="col">
-            <Select
-              label="Choose a language:"
-              defaultSelectedLabel="en"
-              defaultSelectedValue="en"
-              onChange={this.handleValue('language')}
-              options={languagesList}
-            />
-          </div>
         </div>
         <div className="row">
           <div className="col">

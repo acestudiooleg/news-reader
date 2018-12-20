@@ -2,9 +2,9 @@ import { newsApiKey } from '../config';
 
 interface IQuery {
   category: string;
-  language: string;
   country: string;
   from: string;
+  language: string;
   sortBy: string;
   apiKey: string;
 }
@@ -14,6 +14,7 @@ export class NewsService {
   everythingUrl: string = '/top-headlines';
   periodDays: number = 7;
   sortBy: string = 'publishedAt';
+  language: string = 'en';
   constructor(private apikey: string) {}
   buildQuery(q: IQuery): string {
     return Object.keys(q)
@@ -24,13 +25,13 @@ export class NewsService {
   getEverything(
     country: string,
     category: string,
-    language: string,
     date?: string,
     sortBy: string = this.sortBy
   ) {
     const from: string =
       date || this.createDate(this.calcPeriod(new Date(), this.periodDays));
-    const url: string = this.mainUrl + this.everythingUrl;
+    const { mainUrl, everythingUrl, language } = this;
+    const url: string = mainUrl + everythingUrl;
     const q = this.buildQuery({
       country,
       category,

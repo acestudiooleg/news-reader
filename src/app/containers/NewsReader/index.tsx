@@ -1,11 +1,34 @@
 import * as React from 'react';
 import Filter from 'app/components/Filter';
 import NewsList from 'app/components/NewsList';
+import cs from 'classnames';
 
 import { inject, observer } from 'mobx-react';
 // import { RouteComponentProps } from 'react-router';
 // import { RouterStore } from 'app/stores';
 import { STORE_ROUTER, STORE_NEWS } from 'app/constants/stores';
+
+const createHeader = (country, cat, isFetched, isLoading) => {
+  const countryText = !country ? '"All contries"' : `"${country}"`;
+
+  const catText = !cat ? '"All categories"' : `"${cat} category"`;
+
+  const headerContent = isFetched
+    ? `News from ${countryText} and ${catText}`
+    : 'Select Country, Category';
+
+  const loadingHeader = 'Loading ...';
+  return isLoading ? loadingHeader : headerContent;
+};
+
+const alertBox = (
+  <div className="alert alert-warning">
+    Nothing found, Please change filter and try adain
+  </div>
+);
+const errorBox = (
+  <div className="alert alert-danger">Oops, something went wrong!</div>
+);
 
 @inject(STORE_ROUTER, STORE_NEWS)
 @observer
@@ -14,37 +37,33 @@ export class NewsReader extends React.Component {
     const {
       isLoading,
       news,
-      countryFilter,
-      categoryFilter,
-      languageFilter
+      currentCountry,
+      currentCategory,
+      isEmptyResult,
+      isFetched,
+      status
     } = this.props[STORE_NEWS];
-    const countryText =
-      countryFilter === null ? '"All contries"' : `"${countryFilter}"`;
-    const categoryText =
-      categoryFilter === null
-        ? '"All categories"'
-        : `"${categoryFilter} category"`;
-    const langText = `"${languageFilter} language"`;
-    const headerContent =
-      news.length > 0 ? (
-        <h1>
-          News from {countryText} and {categoryText} and {langText}
-        </h1>
-      ) : (
-        <h1>Select Country, Category, Language</h1>
-      );
-    const loadingHeader = <h1>Loading ...</h1>;
-    const header = isLoading ? loadingHeader : headerContent;
+
+    const header = createHeader(
+      currentCountry,
+      currentCategory,
+      isFetched,
+      isLoading
+    );
+
+    const normalBox = isEmptyResult ? alertBox : <NewsList news={news} />;
+    const content = status === 'error' ? errorBox : normalBox;
+
     return (
       <div className="container">
         <Filter />
         <div className="row">
-          <div className="col">{header}</div>
+          <div className="col">
+            <h1>{header}</h1>
+          </div>
         </div>
         <div className="row">
-          <div className="col">
-            <NewsList news={news} />
-          </div>
+          <div className="col">{content}</div>
         </div>
       </div>
     );
