@@ -42,13 +42,16 @@ export class NewsService {
   }
   calcPeriod(date: Date, period: number): Date {
     const newDate = new Date(date);
-    date.setDate(newDate.getDate() - period);
+    newDate.setDate(date.getDate() - period);
     return newDate;
   }
-  createDate(date: Date) {
+  private calcZeroForDate(date: number): string {
+    return date < 10 ? `0${date}` : String(date);
+  }
+  createDate(date: Date): string {
     const year: number = date.getFullYear();
-    const month: number = date.getMonth();
-    const day: number = date.getDate();
+    const month: string = this.calcZeroForDate(date.getMonth() + 1);
+    const day: string = this.calcZeroForDate(date.getDate());
     return `${year}-${month}-${day}`;
   }
 
