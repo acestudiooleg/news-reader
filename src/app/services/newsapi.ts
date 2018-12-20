@@ -17,6 +17,7 @@ export class NewsService {
   constructor(private apikey: string) {}
   buildQuery(q: IQuery): string {
     return Object.keys(q)
+      .filter((el) => Boolean(q[el]))
       .map((key: string) => `${key}=${q[key]}`)
       .join('&');
   }

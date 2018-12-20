@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as style from './style.css';
+import { inject, observer } from 'mobx-react';
 import Select, { ISelectOption } from 'app/components/Select';
 import { COUNTRIES, CATEGORIES, LANGUAGES } from 'app/constants/newsapi';
-import { Row, Col, Button } from 'reactstrap';
+import { STORE_NEWS } from 'app/constants/stores';
 
 const createListFromObject = (ctrs: Object): ISelectOption[] =>
   Object.keys(ctrs).map((country: string) => ({
@@ -17,49 +18,64 @@ const countriesList: ISelectOption[] = createListFromObject(COUNTRIES);
 const languagesList: ISelectOption[] = createListFromObject(LANGUAGES);
 const categoriesList: ISelectOption[] = createListFromArray(CATEGORIES);
 
-export default class NewsReader extends React.Component {
-  handleCat(value: String) {
-    alert(value);
+@inject(STORE_NEWS)
+@observer
+export default class Filter extends React.Component {
+  handleValue(filterName: string) {
+    const newsStore = this.props[STORE_NEWS];
+    return (value) => {
+      newsStore.setFilter(filterName, value);
+    };
   }
+  getList() {
+    const newsStore = this.props[STORE_NEWS];
+    newsStore.getNewsUsingFilter();
+  }
+
   render() {
     return (
       <div className={style.filter}>
-        <Row>
-          <Col>
+        <div className="row">
+          <div className="col">
             <Select
               label="Choose a country:"
               defaultSelectedLabel="all"
               defaultSelectedValue="all"
-              onChange={this.handleCat}
+              onChange={this.handleValue('country')}
               options={countriesList}
             />
-          </Col>
-          <Col>
+          </div>
+          <div className="col">
             <Select
               label="Choose a category:"
               defaultSelectedLabel="all"
               defaultSelectedValue="all"
-              onChange={this.handleCat}
+              onChange={this.handleValue('category')}
               options={categoriesList}
             />
-          </Col>
-          <Col>
+          </div>
+          <div className="col">
             <Select
               label="Choose a language:"
               defaultSelectedLabel="en"
               defaultSelectedValue="en"
-              onChange={this.handleCat}
+              onChange={this.handleValue('language')}
               options={languagesList}
             />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
             <div className={style.getList}>
-              <Button color="primary">Get List</Button>
+              <button
+                onClick={this.getList.bind(this)}
+                className="btn btn-primary"
+              >
+                Get List
+              </button>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }
