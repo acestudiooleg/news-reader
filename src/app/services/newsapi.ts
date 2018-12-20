@@ -11,7 +11,7 @@ interface IQuery {
 
 export class NewsService {
   mainUrl: string = 'https://newsapi.org/v2';
-  everythingUrl: string = '/everything';
+  everythingUrl: string = '/top-headlines';
   periodDays: number = 7;
   sortBy: string = 'publishedAt';
   constructor(private apikey: string) {}
@@ -24,7 +24,7 @@ export class NewsService {
     country: string,
     category: string,
     language: string,
-    date: string,
+    date?: string,
     sortBy: string = this.sortBy
   ) {
     const from: string =
