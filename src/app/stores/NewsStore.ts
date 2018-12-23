@@ -1,14 +1,16 @@
 import { observable, computed, action, runInAction } from 'mobx';
 import { INewsItem } from 'app/models/NewsModel';
 import newsapi from 'app/services/newsapi';
+import RootStore from './RootStore';
 
 export default class NewsStore {
+  rootStore: RootStore;
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
+  }
   @observable news: Array<INewsItem> = [];
   @observable status: string = 'idle';
-  @observable countryFilter = null;
-  @observable categoryFilter = null;
-  @observable currentCountry = null;
-  @observable currentCategory = null;
+  @observable currentArticle = null;
   @observable isFetched: boolean = false;
   newsPerPage: number = 20;
   @computed get isEmptyResult() {
@@ -17,32 +19,52 @@ export default class NewsStore {
   @computed get isLoading() {
     return this.status === 'loading';
   }
-  @action getNews = async (country, category) => {
-    try {
-      this.news = [];
-      this.status = 'loading';
-      const { articles } = await newsapi.getEverything(country, category);
-      runInAction(() => {
-        if (articles instanceof Array) {
-          this.status = 'idle';
-          this.news = articles.slice(0, this.newsPerPage);
-          this.isFetched = true;
-          this.currentCategory = this.categoryFilter;
-          this.currentCountry = this.countryFilter;
-        }
-      });
-    } catch (error) {
-      runInAction(() => {
-        this.status = 'error';
-      });
-      console.log(error);
+  @computed get header() {
+    const { isFetched, isLoading } = this;
+    const {
+      currentCountry: cntr,
+      currentCategory: cat
+    } = this.rootStore.filterStore;
+
+    const countryText = !cntr ? '"All contries"' : `"${cntr}"`;
+
+    const catText = !cat ? '"All categories"' : `"${cat} category"`;
+
+    const headerContent = isFetched
+      ? `News from ${countryText} and ${catText}`
+      : 'Select Country, Category';
+
+    const loadingHeader = 'Loading ...';
+    return isLoading ? loadingHeader : headerContent;
+  }
+  @action setCurrentArticle(article) {
+    this.currentArticle = article;
+  }
+  @action getNews(country, category) {
+    this.news = [];
+    this.status = 'loading';
+    newsapi
+      .getEverything(country, category)
+      .then(this.getNewsSuccess, this.getNewsFailure);
+  }
+  @action.bound getNewsSuccess({ articles }) {
+    if (articles instanceof Array) {
+      this.status = 'idle';
+      this.news = articles.slice(0, this.newsPerPage);
+      this.isFetched = true;
+      this.rootStore.filterStore.currentCategory = this.rootStore.filterStore.categoryFilter;
+      this.rootStore.filterStore.currentCountry = this.rootStore.filterStore.countryFilter;
     }
-  };
+  }
+  @action.bound getNewsFailure(error) {
+    this.status = 'error';
+    console.log(error);
+  }
   @action setFilter(name: string, value: string) {
     this[`${name}Filter`] = value;
   }
   @action getNewsUsingFilter() {
-    const { countryFilter, categoryFilter } = this;
+    const { countryFilter, categoryFilter } = this.rootStore.filterStore;
     this.getNews(countryFilter, categoryFilter);
   }
 }

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import * as style from './style.css';
-import { INewsItem } from 'app/models/NewsModel';
-import Link from 'app/components/Link';
 
-export default (ni: INewsItem, index) => (
-  <div className={style.newsItem} key={ni.title + index}>
+const NewsItem = ({ newsItem, setArticle }) => (
+  <div className={style.newsItem}>
     <div className={style.thumbnail}>
-      <img src={ni.urlToImage} alt="" />
+      <img src={newsItem.urlToImage} alt="" />
     </div>
     <div className={style.content}>
-      <h2>{ni.title}</h2>
-      <p>{ni.description}</p>
-      <Link url="/article" state={ni}>
+      <h2>{newsItem.title}</h2>
+      <p>{newsItem.description}</p>
+      <button className="btn btn-primary" onClick={setArticle(newsItem)}>
         Read More...
-      </Link>
+      </button>
     </div>
   </div>
 );
+
+export default NewsItem;

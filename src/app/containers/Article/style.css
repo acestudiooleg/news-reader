@@ -1,0 +1,19 @@
+.content {
+}
+.picture {
+  width: 400px;
+  min-height: 279px;
+  float: left;
+  background: #888;
+  margin-right: 1rem;
+  img {
+    box-shadow: 3px 3px 3px #888;
+    width: 400px;
+  }
+}
+.article {
+  font-size: 1.5rem;
+}
+.breadcrumb {
+  margin-top: 2rem;
+}

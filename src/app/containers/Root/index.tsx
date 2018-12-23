@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Navbar, NavbarBrand, Container, Row, Col } from 'reactstrap';
 
 export class Root extends React.Component<any, any> {
   renderDevTool() {
@@ -12,14 +11,16 @@ export class Root extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">News Reader</NavbarBrand>
-        </Navbar>
-        <Container fluid>
-          <Row>
-            <Col>{this.props.children}</Col>
-          </Row>
-        </Container>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a className="navbar-brand" href="/">
+            News Reader
+          </a>
+        </nav>
+        <div className="container fluid">
+          <div className="row">
+            <div className="col">{this.props.children}</div>
+          </div>
+        </div>
         {this.renderDevTool()}
       </div>
     );

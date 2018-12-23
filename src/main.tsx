@@ -14,6 +14,7 @@ useStrict(true);
 // prepare MobX stores
 const history = createBrowserHistory();
 const rootStore = createStores(history);
+window['stores'] = rootStore;
 
 // render react DOM
 ReactDOM.render(

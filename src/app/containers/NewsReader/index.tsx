@@ -3,20 +3,10 @@ import Filter from 'app/components/Filter';
 import NewsList from 'app/components/NewsList';
 
 import { inject, observer } from 'mobx-react';
-import { STORE_NEWS } from 'app/constants/stores';
-
-const createHeader = (country, cat, isFetched, isLoading) => {
-  const countryText = !country ? '"All contries"' : `"${country}"`;
-
-  const catText = !cat ? '"All categories"' : `"${cat} category"`;
-
-  const headerContent = isFetched
-    ? `News from ${countryText} and ${catText}`
-    : 'Select Country, Category';
-
-  const loadingHeader = 'Loading ...';
-  return isLoading ? loadingHeader : headerContent;
-};
+import { STORE_NEWS, STORE_FILTER, STORE_ROUTER } from 'app/constants/stores';
+import { INewsItem } from 'app/models/NewsModel';
+import NewsStore from 'app/stores/NewsStore';
+import { RouterStore } from 'mobx-react-router';
 
 const alertBox = (
   <div className="alert alert-warning">
@@ -27,28 +17,25 @@ const errorBox = (
   <div className="alert alert-danger">Oops, something went wrong!</div>
 );
 
-@inject(STORE_NEWS)
+@inject(STORE_NEWS, STORE_FILTER, STORE_ROUTER)
 @observer
 export class NewsReader extends React.Component {
+  setArticle(article: INewsItem): () => void {
+    return () => {
+      const news = this.props[STORE_NEWS] as NewsStore;
+      const router = this.props[STORE_ROUTER] as RouterStore;
+      news.setCurrentArticle(article);
+      router.push('/article');
+    };
+  }
   render() {
-    const {
-      isLoading,
-      news,
-      currentCountry,
-      currentCategory,
-      isEmptyResult,
-      isFetched,
-      status
-    } = this.props[STORE_NEWS];
+    const { news, isEmptyResult, status, header } = this.props[STORE_NEWS];
 
-    const header = createHeader(
-      currentCountry,
-      currentCategory,
-      isFetched,
-      isLoading
+    const normalBox = isEmptyResult ? (
+      alertBox
+    ) : (
+      <NewsList news={news} setArticle={this.setArticle.bind(this)} />
     );
-
-    const normalBox = isEmptyResult ? alertBox : <NewsList news={news} />;
     const content = status === 'error' ? errorBox : normalBox;
 
     return (
