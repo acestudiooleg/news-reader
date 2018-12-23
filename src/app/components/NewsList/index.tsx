@@ -3,5 +3,9 @@ import NewsItem from 'app/components/NewsItem';
 import { INewsItem } from 'app/models/NewsModel';
 
 export default ({ news }: { news: INewsItem[] }) => (
-  <div>{news.map(NewsItem)}</div>
+  <div>
+    {news.map((newsItem) => (
+      <NewsItem {...newsItem} />
+    ))}
+  </div>
 );

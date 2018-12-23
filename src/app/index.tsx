@@ -4,11 +4,14 @@ import { Router, Route, Switch } from 'react-router';
 import { Root } from 'app/containers/Root';
 import { NewsReader } from 'app/containers/NewsReader';
 
+const Article = () => <div>Hello</div>;
+
 // render react DOM
 export const App = hot(module)(({ history }) => (
   <Root>
     <Router history={history}>
       <Switch>
+        <Route path="/article" component={Article} />
         <Route path="/" component={NewsReader} />
       </Switch>
     </Router>

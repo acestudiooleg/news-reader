@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Filter from 'app/components/Filter';
 import NewsList from 'app/components/NewsList';
-import cs from 'classnames';
 
 import { inject, observer } from 'mobx-react';
-// import { RouteComponentProps } from 'react-router';
-// import { RouterStore } from 'app/stores';
-import { STORE_ROUTER, STORE_NEWS } from 'app/constants/stores';
+import { STORE_NEWS } from 'app/constants/stores';
 
 const createHeader = (country, cat, isFetched, isLoading) => {
   const countryText = !country ? '"All contries"' : `"${country}"`;
@@ -30,7 +27,7 @@ const errorBox = (
   <div className="alert alert-danger">Oops, something went wrong!</div>
 );
 
-@inject(STORE_ROUTER, STORE_NEWS)
+@inject(STORE_NEWS)
 @observer
 export class NewsReader extends React.Component {
   render() {
