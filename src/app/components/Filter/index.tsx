@@ -2,8 +2,10 @@ import * as React from 'react';
 import * as style from './style.css';
 import { inject, observer } from 'mobx-react';
 import Select, { ISelectOption } from 'app/components/Select';
-import { COUNTRIES, CATEGORIES, LANGUAGES } from 'app/constants/newsapi';
-import { STORE_NEWS } from 'app/constants/stores';
+import { COUNTRIES, CATEGORIES } from 'app/constants/newsapi';
+import { STORE_FILTER, STORE_NEWS } from 'app/constants/stores';
+import NewsStore from 'app/stores/NewsStore';
+import FilterStore from 'app/stores/FilterStore';
 
 const createListFromObject = (ctrs: Object): ISelectOption[] =>
   Object.keys(ctrs).map((country: string) => ({
@@ -15,20 +17,19 @@ const createListFromArray = (cats: String[]): ISelectOption[] =>
   cats.map((cat: string): ISelectOption => ({ label: cat, value: cat }));
 
 const countriesList: ISelectOption[] = createListFromObject(COUNTRIES);
-const languagesList: ISelectOption[] = createListFromObject(LANGUAGES);
 const categoriesList: ISelectOption[] = createListFromArray(CATEGORIES);
 
-@inject(STORE_NEWS)
+@inject(STORE_FILTER, STORE_NEWS)
 @observer
 export default class Filter extends React.Component {
   handleValue(filterName: string) {
-    const newsStore = this.props[STORE_NEWS];
+    const filterStore = this.props[STORE_FILTER] as FilterStore;
     return (value) => {
-      newsStore.setFilter(filterName, value);
+      filterStore.setFilter(filterName, value);
     };
   }
   getList() {
-    const newsStore = this.props[STORE_NEWS];
+    const newsStore = this.props[STORE_NEWS] as NewsStore;
     newsStore.getNewsUsingFilter();
   }
 

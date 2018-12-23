@@ -8,23 +8,6 @@ export const CATEGORIES = [
   'technology'
 ];
 
-export const LANGUAGES = {
-  ar: 'ar',
-  de: 'de',
-  en: 'en',
-  es: 'es',
-  fr: 'fr',
-  he: 'he',
-  it: 'it',
-  nl: 'nl',
-  no: 'no',
-  pt: 'pt',
-  ru: 'ru',
-  se: 'se',
-  ud: 'ud',
-  zh: 'zh'
-};
-
 export const COUNTRIES = {
   ae: 'ae',
   ar: 'ar',
