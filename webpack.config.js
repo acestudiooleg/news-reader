@@ -20,7 +20,7 @@ module.exports = {
     path: outPath,
     filename: 'bundle.js',
     chunkFilename: '[chunkhash].js',
-    publicPath: '/news-reader/'
+    publicPath: '/news-reader/docs/'
   },
   target: 'web',
   resolve: {

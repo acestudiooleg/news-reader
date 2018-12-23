@@ -1,20 +1,25 @@
-# Требования:
+# News Reader [DEMO](https://acestudiooleg.github.io/news-reader)
 
-* стек для проекта – React.js + MobX\Redux + TypeScript \ Flow.js + webpack
-* использовать react-router, анимации (на твой вкус), можно использовать любые UI kits\CSS фреймворки
-* нужно отлавливать ошибки (Error handling), и желательно покрыть код тестами (test coverage).
-* В тайтле страницы указать текущий день, и дату.
+It is a technical task which I implemented for some company.
 
-# Описание задачи:
+It should render list of News using [News API](https://newsapi.org/)
 
-* Есть два фильтра, по дефолту они должны выбирать All (если возможно).
-* Юзер имеет возможность выбрать как country так и category, например новости из US & Health
-* Когда юзер жмет на кнопку “Get List”, показываем ему список новостей по заданным параметрам
-* В тайтле результата, вставляем параметры поиска например «News from US and Health category»
-* Дальше идет список новостей, отображаем максимум 20 новостей
-* Юзер может запросить новый список новостей, тогда мы апдейтим список новостей в зависимости от заданных параметров юзером.
-* Юзер может кликнуть на read more, в зависимости от новости на которую кликнул юзер, показываем ему расширенный контент новости.
-* Должны присутствовать тайтл, контент, картинка, URL новости.
-* Юзер так же может запросить новый список новостей с страницы открытой новости.
+##Technologies:
 
-News API - https://newsapi.org/
+- React <img width="32px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2000px-React-icon.svg.png"/>
+- React-Router <img width="32px" src="https://seeklogo.com/images/R/react-router-logo-AB5BFB638F-seeklogo.com.png"/>
+- MobX <img width="32px" src="https://mobx.js.org/docs/mobx.png"/>
+- Bootstrap <img width="32px" src="https://user-images.githubusercontent.com/2327532/39481401-fa7d2992-4d30-11e8-886d-c4a3ee88147f.png"/>
+- Webpack <img width="32px" src="https://cdn.worldvectorlogo.com/logos/webpack.svg"/>
+
+## Installation
+
+`npm install`
+
+## Build
+
+`npm run build`
+
+## Tests
+
+`npm test`

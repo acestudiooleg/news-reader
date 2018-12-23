@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Filter from 'app/components/Filter';
 
 export class Root extends React.Component<any, any> {
   renderDevTool() {
@@ -17,6 +18,7 @@ export class Root extends React.Component<any, any> {
           </a>
         </nav>
         <div className="container fluid">
+          <Filter />
           <div className="row">
             <div className="col">{this.props.children}</div>
           </div>

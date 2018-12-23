@@ -6,7 +6,9 @@ import FilterStore from './FilterStore';
 export default class RootStore {
   newsStore: NewsStore;
   filterStore: FilterStore;
+  routerStore: RouterStore;
   constructor(router: RouterStore) {
+    this.routerStore = router;
     this.newsStore = new NewsStore(this);
     this.filterStore = new FilterStore(this);
 

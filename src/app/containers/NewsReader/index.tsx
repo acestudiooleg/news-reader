@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Filter from 'app/components/Filter';
+
 import NewsList from 'app/components/NewsList';
 
 import { inject, observer } from 'mobx-react';
@@ -40,7 +40,6 @@ export class NewsReader extends React.Component {
 
     return (
       <div className="container">
-        <Filter />
         <div className="row">
           <div className="col">
             <h1>{header}</h1>

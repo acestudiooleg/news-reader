@@ -54,6 +54,7 @@ export default class NewsStore {
       this.isFetched = true;
       this.rootStore.filterStore.currentCategory = this.rootStore.filterStore.categoryFilter;
       this.rootStore.filterStore.currentCountry = this.rootStore.filterStore.countryFilter;
+      this.rootStore.routerStore.push('/');
     }
   }
   @action.bound getNewsFailure(error) {
